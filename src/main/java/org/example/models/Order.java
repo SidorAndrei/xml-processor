@@ -1,4 +1,4 @@
-package org.personal.models;
+package org.example.models;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;

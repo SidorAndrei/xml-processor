@@ -1,17 +1,17 @@
-package org.personal;
+package org.example;
 
-import org.personal.models.Orders;
-import org.personal.models.SupplierProducts;
-import org.personal.controllers.FileScanner;
-import org.personal.service.SerializationService;
-import org.personal.service.XmlWriter;
+import org.example.controllers.FileScanner;
+import org.example.models.Orders;
+import org.example.models.SupplierProducts;
+import org.example.service.SerializationService;
+import org.example.service.XmlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Logger LOGGER = LoggerFactory.getLogger(Main.class);
         LOGGER.debug("Start creating serialization services");
         SerializationService<Orders> ordersSerializationService = new SerializationService<>();
@@ -29,11 +29,10 @@ public class Main {
 
         LOGGER.debug("Start scanning");
         try {
-            scanner.startScan();
+            scanner.watch();
         } catch (IOException | InterruptedException e) {
-//            throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
-
         LOGGER.debug("Application has been stopped");
     }
 }

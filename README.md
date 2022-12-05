@@ -2,7 +2,7 @@
 
 ## About the project
 &emsp;&emsp; 
-A simple XML processor that scans a folder **orders** (default) and process files with name pattern "orders##.xml" (default)
+A simple XML processor that scans a folder **input** (default) and process files with name pattern "orders##.xml" (default)
 containing a list of orders with a list of products to other files containing products filtered by supplier, created in 
 a folder **output** (default) with a name pattern <supplier>##.xml (## - number taken from orders##.xml).
 

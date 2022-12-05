@@ -1,4 +1,4 @@
-package org.personal.models;
+package org.example.models;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
@@ -24,7 +24,7 @@ public class SupplierProducts {
         this.products = new ArrayList<>();
     }
 
-    public void addProduct(Product product){
+    public void addProduct(Product product) {
         products.add(product);
     }
 }

@@ -1,4 +1,4 @@
-package org.personal.models;
+package org.example.models;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @XStreamAlias("price")
-@XStreamConverter(value = ToAttributedValueConverter.class,strings = "value")
+@XStreamConverter(value = ToAttributedValueConverter.class, strings = "value")
 public class Price {
     private String currency;
     private Float value;

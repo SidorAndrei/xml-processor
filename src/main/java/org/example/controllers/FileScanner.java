@@ -1,13 +1,12 @@
-package org.personal.controllers;
+package org.example.controllers;
 
 import com.thoughtworks.xstream.converters.reflection.AbstractReflectionConverter;
 import com.thoughtworks.xstream.mapper.CannotResolveClassException;
-import org.personal.configuration.Configuration;
-import org.personal.interfaces.Scanner;
-import org.personal.models.Orders;
-import org.personal.models.SupplierProducts;
-import org.personal.service.SerializationService;
-import org.personal.service.XmlWriter;
+import org.example.configuration.Configuration;
+import org.example.models.Orders;
+import org.example.models.SupplierProducts;
+import org.example.service.SerializationService;
+import org.example.service.XmlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -15,13 +14,20 @@ import org.xml.sax.SAXException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FileScanner implements Scanner {
+public class FileScanner {
     private final SerializationService<Orders> ordersSerializationService;
     private final SerializationService<SupplierProducts> productsSerializationService;
     private final XmlWriter xmlWriter;
@@ -37,14 +43,13 @@ public class FileScanner implements Scanner {
         createInputFolderIfNotExists();
     }
 
-    @Override
-    public void startScan() throws IOException, InterruptedException {
+    public void watch() throws IOException, InterruptedException {
         LOGGER.debug("Initializing WatchService");
         try (WatchService watcher = FileSystems.getDefault().newWatchService()) {
             Map<WatchKey, Path> keyMap = new HashMap<>();
             LOGGER.debug("WatchService initialized ");
 
-            Path path = Paths.get(configuration.getINPUT_DIRECTORY());
+            Path path = Paths.get(configuration.getInputDirectory());
             keyMap.put(path.register(watcher, StandardWatchEventKinds.ENTRY_CREATE), path);
             WatchKey watchKey;
             LOGGER.info("Start scanning...");
@@ -55,7 +60,7 @@ public class FileScanner implements Scanner {
                     Path eventPath = (Path) event.context();
                     LOGGER.info(String.format("File %s has been found!", eventPath));
 
-                    if (verifyFileName(String.valueOf(eventPath.getFileName())))
+                    if (validateFileNamePattern(String.valueOf(eventPath.getFileName())))
                         handleEvent(String.valueOf(eventPath), String.valueOf(eventDir));
                 }
             } while (watchKey.reset());
@@ -69,7 +74,7 @@ public class FileScanner implements Scanner {
     }
 
     private void createInputFolderIfNotExists() {
-        Path path = Paths.get(configuration.getINPUT_DIRECTORY());
+        Path path = Paths.get(configuration.getInputDirectory());
         LOGGER.debug("Checking for input folder");
         if (Files.notExists(path)) {
             try {
@@ -82,11 +87,10 @@ public class FileScanner implements Scanner {
         }
     }
 
-    @Override
-    public boolean verifyFileName(String fileName) {
+    public boolean validateFileNamePattern(String fileName) {
         boolean result;
         LOGGER.info("Verifying file name");
-        if (!(fileName.startsWith(configuration.getINPUT_FILE_NAME_PREFIX()) && fileName.endsWith(configuration.getINPUT_FILE_EXTENSION()))) {
+        if (!(fileName.startsWith(configuration.getInputFileNamePrefix()) && fileName.endsWith(configuration.getInputFileExtension()))) {
             LOGGER.info("File name does not meet the requirements");
             result = false;
         } else {
@@ -99,8 +103,8 @@ public class FileScanner implements Scanner {
         try {
             return Integer.parseInt(
                     fileName
-                            .split(configuration.getINPUT_FILE_NAME_PREFIX())[1]
-                            .split(configuration.getINPUT_FILE_EXTENSION())[0]
+                            .split(configuration.getInputFileNamePrefix())[1]
+                            .split(configuration.getInputFileExtension())[0]
             );
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             LOGGER.warn(String.format("File %s does not contain the number", fileName));
@@ -144,7 +148,7 @@ public class FileScanner implements Scanner {
 
     private List<SupplierProducts> getSuppliersProducts(Orders orders) {
         HashMap<String, SupplierProducts> supplierProductsHashMap = new HashMap<>();
-        LOGGER.info("Start products sorting");
+        LOGGER.info("Start products filtering");
         orders.getOrders().forEach(order -> {
             LOGGER.info(String.format("Start order %s", order.getID()));
             order.getProducts().forEach(product -> {
@@ -156,7 +160,7 @@ public class FileScanner implements Scanner {
                 product.setSupplier(null);
             });
         });
-        LOGGER.info("Products are sorted by suppliers");
+        LOGGER.info("Products are filtered by suppliers");
         return new ArrayList<>(supplierProductsHashMap.values());
     }
 
