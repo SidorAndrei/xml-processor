@@ -11,7 +11,7 @@ a folder **output** (default) with a name pattern <supplier>##.xml (## - number 
 - [Maven Apache](https://maven.apache.org/download.cgi)
 
 ## Technologies used
-<div style="display: flex;flex-direction: row ;justify-content: space-between;">
+<div style="display: flex;flex-direction: row ;">
     <img src="assets/intellij-logo.png" height="200"  alt="IntelliJ Idea logo">
     <img src="assets/maven-logo.png" height="150" alt="maven logo">
 </div>
