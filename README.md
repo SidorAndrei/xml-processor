@@ -33,16 +33,17 @@ a folder **output** (default) with a name pattern <supplier>##.xml (## - number 
 &emsp; Open _**src/main/resources/scan.properties**_ and you can modify input/output folder's name and input file name 
 prefix and (not recommended) extension
 
-#### B. Create the jar file
+#### B. Configure you our log file name 
+&emsp; Open _**src/main/resources/log4j.properties**_ and you can change the name from the second line of the document
 
+#### C. Create the jar file (Must be executed if any of log4j.properties or scan.properties are modified)
 - Go to main folder
 - Open command line (Press Win+R and type cmd, then press Enter) to the main folder
 - Use command
+
 ####
     mvn install
 ### Step 3
 #### Open the application with command
     
     java -jar .\jar\xml-processor-jar-with-dependencies.jar
-
-
