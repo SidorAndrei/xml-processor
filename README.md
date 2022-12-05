@@ -12,8 +12,8 @@ a folder **output** (default) with a name pattern <supplier>##.xml (## - number 
 
 ## Technologies used
 <div style="display: flex;flex-direction: row ;justify-content: space-between;">
-    <img src="assets/intellij-logo.png" height="200"  alt="IntelliJ Idea logo">
-    <img src="assets/maven-logo.png" height="150" alt="maven logo">
+    <img src="assets/intellij-logo.png" width="25%"  alt="IntelliJ Idea logo">
+    <img src="assets/maven-logo.png" width="70%" alt="maven logo">
 </div>
 
 ### Maven dependencies
