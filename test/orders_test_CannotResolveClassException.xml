@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ordesr>
+    <order created='2022-07-12T15:29' ID='1'>
+        <product>
+            <description>Sony 1</description>
+            <gtin>00027242816657</gtin>
+            <price currency="USD">2999.99</price>
+            <supplier>Sony</supplier>
+        </product>
+        <product>
+            <description>Apple 1</description>
+            <gtin>00885909464517</gtin>
+            <price currency="USD">399.0</price>
+            <supplier>Apple</supplier>
+        </product>
+        <product>
+            <description>Sony 2</description>
+            <gtin>00027242831438</gtin>
+            <price currency="USD">91.99</price>
+            <supplier>Sony</supplier>
+        </product>
+    </order>
+    <order created='2022-07-13T16:02' ID='2'>
+        <product>
+            <description>Apple 2</description>
+            <gtin>00885909464043</gtin>
+            <price currency="USD">1149.0</price>
+            <supplier>Apple</supplier>
+        </product>
+        <product>
+            <description>Panasonic 1</description>
+            <gtin>00885170076471</gtin>
+            <price currency="USD">999.99</price>
+            <supplier>Panasonic</supplier>
+        </product>
+    </order>
+</ordesr>
